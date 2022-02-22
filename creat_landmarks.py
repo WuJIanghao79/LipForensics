@@ -31,8 +31,8 @@ DATASETS = {
 def parse_args():
     parser = argparse.ArgumentParser(description="create landmarks via FAN")
     parser.add_argument("--data-root", help="Root path of datasets", type=str,
-                        default='/Users/wujianghao/Desktop/LipForensics/data/datasets')
-    parser.add_argument("--dataset", help="Dataset to preprocess", type=str,
+                        default='/Volumes/WuJianghao')
+    parser.add_argument('-d', "--dataset", help="Dataset to preprocess", type=str,
                         choices=["all",
                                  "FaceForensics++",
                                  "RealFF",
@@ -45,13 +45,13 @@ def parse_args():
                                  "CelebDF",
                                  "DFDC", ],
                         default="RealFF", )
-    parser.add_argument(
-        "--compression",
-        help="Video compression level for FaceForensics++",
-        type=str,
-        choices=["c0", "c23", "c40"],
-        default="c23",
-    )
+    parser.add_argument('-c',
+                        "--compression",
+                        help="Video compression level for FaceForensics++",
+                        type=str,
+                        choices=["c0", "c23", "c40"],
+                        default="c23",
+                        )
 
     args = parser.parse_args()
 
@@ -77,7 +77,7 @@ def save_landmarks(frame_path, frame_name, frame_root, video_name, arg,
     -------
 
     """
-    global DEVICE,DATASETS
+    global DEVICE, DATASETS
     save_path = os.path.join(args.data_root, DATASETS[args.dataset][0], args.compression, 'landmarks', video_name)
     if not os.path.exists(save_path):
         os.makedirs(save_path, exist_ok=True)
@@ -92,12 +92,12 @@ if __name__ == '__main__':
     args = parse_args()
     if args.dataset == "all":
         dataset = ["Forensics/RealFF",
-                   "Forensics/Deepfakes",
-                   "Forensics/FaceSwap",
-                   "Forensics/Face2Face",
-                   "Forensics/NeuralTextures",
-                   "Forensics/FaceShifter",
-                   "Forensics/DeeperForensics", ]
+                   "Forensics/maniputed_sequences/Deepfakes",
+                   "Forensics/maniputed_sequences/FaceSwap",
+                   "Forensics/maniputed_sequences/Face2Face",
+                   "Forensics/maniputed_sequences/NeuralTextures",
+                   "Forensics/maniputed_sequences/FaceShifter",
+                   ]
     else:
         datasets = DATASETS[args.dataset]
     for dataset in datasets:
